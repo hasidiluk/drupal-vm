@@ -1,0 +1,90 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+
+
+function menu_magic_menu() {
+  $items = [];
+
+  $items['magic'] = [
+    'title' => 'A title magic',
+    'page callback' => 'menu_magic_basic',
+    'access arguments' => ['access content']
+  ];
+
+  $items['magic/%'] = [
+    'title' => 'A title magic',
+    'page callback' => 'menu_magic_extra',
+    'page arguments' => [1],
+    'access arguments' => ['access content'],
+    'file' => 'menu_magic.extra.inc',
+  ];
+
+  $items['user/%/magic'] = [
+    'title' => 'Magic',
+    'description' => 'magic for users',
+    'page callback' => 'menu_magic_user_tab',
+    'page arguments' => [1],
+    'access arguments' => ['administrator users'],
+    'file' => 'menu_magic.user.inc',
+    'type' => MENU_LOCAL_TASK,
+  ];
+
+  $items['node/%node/magic'] = [
+    'title' => 'Magic',
+    'description' => 'Do magical things',
+    'page callback' => 'manu_magic_node_context',
+    'page arguments' => [1],
+    'access arguments' => ['access content'],
+    'file' => 'menu_magic.context.inc',
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+  ];
+
+  return $items;
+}
+
+function menu_magic_basic() {
+  $content = [];
+
+  $content['raw_markup'] = [
+    '#type' => 'markup',
+    '#markup' => t('This is a sample page'),
+    '#prefix' => '<p>',
+    '#suffix' => '</p>',
+  ];
+
+  $variables = [
+    'path' => 'http://placekitten.com/440/400',
+    'alt' => t('This is a sample image'),
+    'title' => t('This is a title'),
+  ];
+
+  $content['themed_data'] = [
+    '#type' => 'markup',
+    '#markup' => theme('image', $variables),
+    '#prefix' => '<div class="menu-magic-image">',
+    '#suffix' => '</div>',
+    '#attached' => [
+      'css' => [
+        drupal_get_path('module', 'menu_magic') . '/menu_magic.css',
+      ],
+    ],
+  ];
+
+  $content['renderable_element'] = [
+    '#theme' => 'item_list',
+    '#title' => 'sample titile',
+    '#items' => [
+      'apple',
+      'mango',
+      'orange'
+    ],
+  ];
+
+  return $content;
+}
+
+

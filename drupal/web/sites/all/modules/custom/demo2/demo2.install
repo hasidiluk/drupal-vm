@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Implement hook_schema()
+ */
+function demo2_schema() {
+  $schema = [];
+
+  $schema['demo2'] = [
+    'description' => 'Information about node views.',
+    'fields' => [
+      'nid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "The node's {node}.nid",
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "The node's {node}.uid",
+      ],
+      'view_count' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "Simple node view counter per user",
+      ],
+      'last_viewed' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "The last views date (timestamp)",
+      ],      
+    ],
+    'primary key' => ['nid', 'uid'],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implement hook_update_N()
+ */
+function demo2_update_7000() {
+  drupal_install_schema('demo2');
+}
+
+/**
+ * Implement hook_update_N()
+ * Add last viewed date field
+ */
+function demo2_update_7001() {
+  $field = [
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'not null' => TRUE,
+    'default' => 0,
+    'description' => "The last views date (timestamp)",
+  ];
+  db_add_field('demo2', 'last_viewed', $field);
+
+  return t('Alter last_viewed successfull');
+}
