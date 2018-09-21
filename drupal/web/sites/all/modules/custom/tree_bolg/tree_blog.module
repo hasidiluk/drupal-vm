@@ -11,8 +11,7 @@
 function tree_blog_help($path, $arg) {
   switch ($path) {
     case "admin/help#tree_blog":
-      return t('Display link to nodes created on this date');
+      return t('Display link');
       break;
   }
 }
- Tuesday, September 18, 2018 10:03:58.079 AM Tuesday, September 18, 2018 8:25:00 AM
