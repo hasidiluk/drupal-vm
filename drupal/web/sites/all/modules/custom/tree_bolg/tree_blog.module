@@ -10,7 +10,7 @@
  */
 function tree_blog_help($path, $arg) {
   switch ($path) {
-    case "admin/help#tree_blog":
+    case "admin/help#tree_blog_new":
       return t('Display link to nodes created on this date');
       break;
   }
